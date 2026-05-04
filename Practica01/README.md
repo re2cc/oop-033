@@ -5,7 +5,10 @@
 ~~~
 scoop install temurin-lts-jdk
 ~~~
+![](media/jdk.png)
 - Usando scoop se instala IDEA Ultimate (Gratis para estudiantes)
 ~~~
 scoop install temurin-lts-jdk
 ~~~
+![](media/idea_install.png)
+![](media/idea_setup.png)
