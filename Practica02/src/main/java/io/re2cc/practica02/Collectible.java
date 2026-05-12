@@ -42,7 +42,7 @@ public class Collectible {
                 this.humidityThreshold = 0.3f;
                 break;
             default:
-                IO.println("Advertencia, el material " + material + " no esta registrado. Se usaran valores predeterminados");
+                IO.println("Warning: The material " + material + " is not registered. Default values will be used.");
                 break;
         }
     }
