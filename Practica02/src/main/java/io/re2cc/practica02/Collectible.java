@@ -47,4 +47,31 @@ public class Collectible {
         }
     }
 
+    void printThreshold() {
+        IO.println("Collectible: " + this.name);
+        IO.println("UV A: " + this.uvaThreshold);
+        IO.println("UV B: " + this.uvbThreshold);
+        IO.println("Temperature: " + this.temperatureThreshold);
+        IO.println("Humidity: " + this.humidityThreshold);
+    }
+
+    void elevateThreshold(float value) {
+        this.uvaThreshold += value;
+        this.uvbThreshold += value;
+        this.temperatureThreshold += value;
+        this.humidityThreshold += value;
+    }
+
+    float uvIndexAproxThreshold() {
+        // Example equation, UV index calculation is more complex than this
+        return this.uvaThreshold + (this.uvbThreshold * 2.5f);
+    }
+
+    boolean hasExceedTemperatureThreshold(float currentTemperature) {
+        return currentTemperature > this.temperatureThreshold;
+    }
+
+    float getSuggestedTemperature() {
+        return this.temperatureThreshold;
+    }
 }
