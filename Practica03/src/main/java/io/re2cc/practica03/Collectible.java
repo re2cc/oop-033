@@ -1,77 +1,83 @@
 package io.re2cc.practica03;
 
 public class Collectible {
-    String name;
-    float uvaThreshold;
-    float uvbThreshold;
-    float temperatureThreshold;
-    float humidityThreshold;
+    private String name;
+    private float uvaThreshold;
+    private float uvbThreshold;
+    private float temperatureThreshold;
+    private float humidityThreshold;
 
-    Collectible(String name, float uvaThreshold,  float uvbThreshold, float temperatureThreshold, float humidityThreshold) {
-        this.name = name;
-        this.uvaThreshold = uvaThreshold;
-        this.uvbThreshold = uvbThreshold;
-        this.temperatureThreshold = temperatureThreshold;
-        this.humidityThreshold = humidityThreshold;
+    public Collectible(String name, float uvaThreshold, float uvbThreshold, float temperatureThreshold, float humidityThreshold) {
+        setName(name);
+        setUvaThreshold(uvaThreshold);
+        setUvbThreshold(uvbThreshold);
+        setTemperatureThreshold(temperatureThreshold);
+        setHumidityThreshold(humidityThreshold);
     }
 
-    Collectible(String name) {
+    public Collectible(String name) {
         this(name, 0.5f, 0.5f, 0.5f, 0.5f);
     }
 
-    Collectible(String name, String material) {
+    public Collectible(String name, String material) {
         this(name);
-
         switch (material) {
-            case "PVC":
-                this.uvaThreshold = 0.1f;
-                this.uvbThreshold = 0.1f;
-                this.temperatureThreshold = 0.1f;
-                this.humidityThreshold = 0.1f;
-                break;
-            case "Paper":
-                this.uvaThreshold = 0.2f;
-                this.uvbThreshold = 0.2f;
-                this.temperatureThreshold = 0.2f;
-                this.humidityThreshold = 0.2f;
-                break;
-            case "Oil":
-                this.uvaThreshold = 0.3f;
-                this.uvbThreshold = 0.3f;
-                this.temperatureThreshold = 0.3f;
-                this.humidityThreshold = 0.3f;
-                break;
-            default:
-                IO.println("Warning: The material " + material + " is not registered. Default values will be used.");
-                break;
+            case "PVC" -> setAllThresholds(0.1f);
+            case "Paper" -> setAllThresholds(0.2f);
+            case "Oil" -> setAllThresholds(0.3f);
+            default -> System.out.println("Warning: Material " + material + " unknown. Using defaults.");
         }
     }
 
-    void printThreshold() {
-        IO.println("Collectible: " + this.name);
-        IO.println("UV A: " + this.uvaThreshold);
-        IO.println("UV B: " + this.uvbThreshold);
-        IO.println("Temperature: " + this.temperatureThreshold);
-        IO.println("Humidity: " + this.humidityThreshold);
+    private void setAllThresholds(float val) {
+        this.uvaThreshold = val;
+        this.uvbThreshold = val;
+        this.temperatureThreshold = val;
+        this.humidityThreshold = val;
     }
 
-    void elevateThreshold(float value) {
-        this.uvaThreshold += value;
-        this.uvbThreshold += value;
-        this.temperatureThreshold += value;
-        this.humidityThreshold += value;
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public float getHumidityThreshold() { return humidityThreshold; }
+    public void setHumidityThreshold(float humidityThreshold) {
+        if (humidityThreshold < 0 || humidityThreshold > 100) { // Is percentage
+            throw new IllegalArgumentException("Error: La humedad debe estar entre 0% y 100%.");
+        }
+        this.humidityThreshold = humidityThreshold;
     }
 
-    float uvIndexAproxThreshold() {
+    public float getTemperatureThreshold() { return temperatureThreshold; }
+    public void setTemperatureThreshold(float temperatureThreshold) {
+        if (temperatureThreshold < -273.15f) { // Less than that is less than 0 K which is impossible
+            throw new IllegalArgumentException("Error: Temperatura imposible. El valor debe ser mayor a -273.15° C.");
+        }
+        this.temperatureThreshold = temperatureThreshold;
+    }
+
+    public float getUvaThreshold() { return uvaThreshold; }
+    public void setUvaThreshold(float uvaThreshold) { this.uvaThreshold = uvaThreshold; }
+
+    public float getUvbThreshold() { return uvbThreshold; }
+    public void setUvbThreshold(float uvbThreshold) { this.uvbThreshold = uvbThreshold; }
+
+    public void elevateThreshold(float value) {
+        setUvaThreshold(this.uvaThreshold + value);
+        setUvbThreshold(this.uvbThreshold + value);
+        setTemperatureThreshold(this.temperatureThreshold + value);
+        setHumidityThreshold(this.humidityThreshold + value);
+    }
+
+    public float uvIndexAproxThreshold() {
         // Example equation, UV index calculation is more complex than this
         return this.uvaThreshold + (this.uvbThreshold * 2.5f);
     }
 
-    boolean hasExceedTemperatureThreshold(float currentTemperature) {
+    public boolean hasExceedTemperatureThreshold(float currentTemperature) {
         return currentTemperature > this.temperatureThreshold;
     }
 
-    float getSuggestedTemperature() {
-        return this.temperatureThreshold;
+    public float getSuggestedTemperature() {
+        return this.temperatureThreshold - 5;
     }
 }
