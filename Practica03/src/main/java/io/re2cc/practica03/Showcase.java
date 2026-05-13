@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Showcase {
-    ArrayList<Collectible> storedCollectibles = new ArrayList<>();
+    private ArrayList<Collectible> storedCollectibles = new ArrayList<>();
+    int capacity = 5; // Default capacity, other showcase types may have a different ones
 
     Showcase() {}
 
     void addCollectible(Collectible collectible) {
-        storedCollectibles.add(collectible);
+        if (storedCollectibles.size() < capacity) {
+            storedCollectibles.add(collectible);
+        } else {
+            IO.println("Error: There is no more space in the showcase");
+        }
     }
 
     Optional<Collectible> searchCollectible(String name) {
         for (Collectible collectible : storedCollectibles) {
-            if (collectible.name.equals(name)) {
+            if (collectible.getName().equals(name)) {
                 return Optional.of(collectible);
             }
         }
@@ -23,7 +28,7 @@ public class Showcase {
 
     void showCollectibles() {
         for (Collectible collectible : storedCollectibles) {
-            IO.println(collectible.name);
+            IO.println(collectible);
         }
     }
 }
