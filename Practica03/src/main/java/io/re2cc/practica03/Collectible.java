@@ -61,6 +61,12 @@ public class Collectible {
     public float getUvbThreshold() { return uvbThreshold; }
     public void setUvbThreshold(float uvbThreshold) { this.uvbThreshold = uvbThreshold; }
 
+    @Override
+    public String toString() {
+        return String.format("Collectible[Name: %s | UVA): %.2f | UVB): %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+                name, uvaThreshold, uvbThreshold, temperatureThreshold, humidityThreshold);
+    }
+
     public void elevateThreshold(float value) {
         setUvaThreshold(this.uvaThreshold + value);
         setUvbThreshold(this.uvbThreshold + value);
