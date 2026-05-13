@@ -72,6 +72,6 @@ public class Collectible {
     }
 
     float getSuggestedTemperature() {
-        return this.temperatureThreshold;
+        return this.temperatureThreshold - 5;
     }
 }
