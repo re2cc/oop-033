@@ -10,3 +10,8 @@ a test from a class
 Genero un test que hace exactamente lo que quería, no tengo ningún método que mida el tamaño del ArrayList de en un momento
 dado asi que lo que hizo fue intentar un 6to objeto, que fallo, luego lo busco y como no esta, asume que funciona.
 Ademas IDEA si tiene una forma simple de insertar test, Ctrl + Shift + T
+
+- How can I check some attribute remains private?
+
+Aparentemente no se suele hacer esto, generalmente si un atributo tiene getters o setters es por que es privada
+entonces no es necesario.
