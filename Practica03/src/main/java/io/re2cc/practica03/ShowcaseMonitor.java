@@ -19,7 +19,7 @@ public class ShowcaseMonitor {
         if (showcase.searchCollectible("Important thing").isPresent()) {
             Collectible foundCollectible = showcase.searchCollectible("Important thing").get();
             foundCollectible.elevateThreshold(0.1f);
-            foundCollectible.printThreshold();
+            IO.println(foundCollectible);
             IO.println("Approximated UV index: " + foundCollectible.uvIndexAproxThreshold());
             IO.println("Suggested temperature: " + foundCollectible.getSuggestedTemperature());
             if (foundCollectible.hasExceedTemperatureThreshold(150f)) {
