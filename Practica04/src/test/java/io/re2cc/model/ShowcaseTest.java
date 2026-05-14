@@ -20,14 +20,14 @@ class ShowcaseTest {
     @Test
     void addCollectible() {
         for (int i = 1; i <= 5; i++) {
-            showcase.addCollectible(new Collectible("Item " + i));
+            showcase.addCollectible(new WoodCollectible("Item " + i));
         }
 
         String extraItemName = "Item 6";
-        Collectible extraItem = new Collectible(extraItemName);
+        PvcFigureCollectible extraItem = new PvcFigureCollectible(extraItemName);
         showcase.addCollectible(extraItem);
 
-        Optional<Collectible> result = showcase.searchCollectible(extraItemName);
+        Optional<PhysicalCollectible> result = showcase.searchCollectible(extraItemName);
 
         assertFalse(result.isPresent(), "The showcase should not allow adding items beyond its capacity of 5.");
     }

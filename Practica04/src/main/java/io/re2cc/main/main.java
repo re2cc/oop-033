@@ -1,17 +1,19 @@
 package io.re2cc.main;
 
-import io.re2cc.model.Collectible;
-import io.re2cc.model.Showcase;
+import io.re2cc.model.*;
+
+import java.util.Optional;
 
 public class main {
     static void main() {
         Showcase showcase = new Showcase();
 
-        Collectible defaultCollectible = new Collectible("Random thing");
-        Collectible pvcCollectible = new Collectible("PVC thing", "PVC");
-        Collectible wrongMaterialCollectible = new Collectible("Glass thing", "Glass");
-        Collectible specificCollectible = new Collectible("Important thing", 0.3f, 2.3f, 0.44f, 12.33f);
+        PhysicalCollectible defaultCollectible = new PhysicalCollectible("Random thing", 10.0f, 10.0f, 10.0f, 10.0f);
+        PvcFigureCollectible pvcCollectible = new PvcFigureCollectible("PVC thing");
+        WoodCollectible wrongMaterialCollectible = new WoodCollectible("Wood thing");
+        OilPaintingCollectible specificCollectible = new OilPaintingCollectible("Painting");
 
+        // Polymorphism, its an ArrayList<PhysicalCollectible>
         showcase.addCollectible(defaultCollectible);
         showcase.addCollectible(pvcCollectible);
         showcase.addCollectible(wrongMaterialCollectible);
@@ -19,8 +21,11 @@ public class main {
 
         showcase.showCollectibles();
 
-        if (showcase.searchCollectible("Important thing").isPresent()) {
-            Collectible foundCollectible = showcase.searchCollectible("Important thing").get();
+        // Polymorphism, will return OilPaintingCollectible on a PhysicalCollectible
+        Optional<PhysicalCollectible> search = showcase.searchCollectible("Painting");
+
+        if (search.isPresent()) {
+            PhysicalCollectible foundCollectible = search.get();
             foundCollectible.elevateThreshold(0.1f);
             IO.println(foundCollectible);
             IO.println("Approximated UV index: " + foundCollectible.uvIndexAproxThreshold());
