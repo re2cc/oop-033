@@ -17,7 +17,7 @@ public class PhysicalCollectible extends Collectible {
     public float getHumidityThreshold() { return humidityThreshold; }
     public void setHumidityThreshold(float humidityThreshold) {
         if (humidityThreshold < 0 || humidityThreshold > 100) { // Is percentage
-            throw new IllegalArgumentException("Error: La humedad debe estar entre 0% y 100%.");
+            throw new IllegalArgumentException("Error: Humidity must be between 0% y 100%.");
         }
         this.humidityThreshold = humidityThreshold;
     }
@@ -25,7 +25,7 @@ public class PhysicalCollectible extends Collectible {
     public float getTemperatureThreshold() { return temperatureThreshold; }
     public void setTemperatureThreshold(float temperatureThreshold) {
         if (temperatureThreshold < -273.15f) { // Less than that is less than 0 K which is impossible
-            throw new IllegalArgumentException("Error: Temperatura imposible. El valor debe ser mayor a -273.15° C.");
+            throw new IllegalArgumentException("Error: Impossible temperature. The value must be greater than -273.15° C.");
         }
         this.temperatureThreshold = temperatureThreshold;
     }
