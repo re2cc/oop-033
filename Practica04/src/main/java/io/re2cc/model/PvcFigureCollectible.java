@@ -45,7 +45,7 @@ public class PvcFigureCollectible extends PhysicalCollectible {
 
     @Override
     public String toString() {
-        return String.format("PvcFigureCollectible[Name: %s | UVA): %.2f | UVB): %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+        return String.format("PvcFigureCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), getUvaThreshold(), getUvbThreshold(), getTemperatureThreshold(), getHumidityThreshold());
     }
 }
