@@ -1,4 +1,4 @@
-# Practica 2
+# Practica 3
 
 ## Reglas
 1. Rango de Humedad (`setHumidityThreshold`):
