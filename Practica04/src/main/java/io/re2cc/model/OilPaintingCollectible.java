@@ -2,7 +2,7 @@ package io.re2cc.model;
 
 public class OilPaintingCollectible extends PhysicalCollectible {
     public OilPaintingCollectible(String name) {
-        super(name, 0.3f, 0.3f, 0.3f, 0.3f);
+        super(name, 30.0f, 30.0f, 38.0f, 70.0f);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OilPaintingCollectible extends PhysicalCollectible {
 
     @Override
     public String toString() {
-        return String.format("OilPaintCollectible[Name: %s | UVA): %.2f | UVB): %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+        return String.format("OilPaintCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), getUvaThreshold(), getUvbThreshold(), getTemperatureThreshold(), getHumidityThreshold());
     }
 }

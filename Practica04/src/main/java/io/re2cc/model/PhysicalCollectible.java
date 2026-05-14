@@ -38,7 +38,7 @@ public class PhysicalCollectible extends Collectible {
 
     @Override
     public String toString() {
-        return String.format("PhysicalCollectible[Name: %s | UVA): %.2f | UVB): %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+        return String.format("PhysicalCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), uvaThreshold, uvbThreshold, temperatureThreshold, humidityThreshold);
     }
 
