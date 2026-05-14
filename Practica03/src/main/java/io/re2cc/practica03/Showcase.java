@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public class Showcase {
     private ArrayList<Collectible> storedCollectibles = new ArrayList<>();
-    int capacity = 5; // Default capacity, other showcase types may have a different ones
+    protected int capacity = 5; // Default capacity, other showcase types may have a different ones
 
     Showcase() {}
 
