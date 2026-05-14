@@ -7,9 +7,9 @@ public class Showcase {
     private ArrayList<Collectible> storedCollectibles = new ArrayList<>();
     protected int capacity = 5; // Default capacity, other showcase types may have a different ones
 
-    Showcase() {}
+    public Showcase() {}
 
-    void addCollectible(Collectible collectible) {
+    public void addCollectible(Collectible collectible) {
         if (storedCollectibles.size() < capacity) {
             storedCollectibles.add(collectible);
         } else {
@@ -17,7 +17,7 @@ public class Showcase {
         }
     }
 
-    Optional<Collectible> searchCollectible(String name) {
+    public Optional<Collectible> searchCollectible(String name) {
         for (Collectible collectible : storedCollectibles) {
             if (collectible.getName().equals(name)) {
                 return Optional.of(collectible);
@@ -26,7 +26,7 @@ public class Showcase {
         return Optional.empty();
     }
 
-    void showCollectibles() {
+    public void showCollectibles() {
         for (Collectible collectible : storedCollectibles) {
             IO.println(collectible);
         }

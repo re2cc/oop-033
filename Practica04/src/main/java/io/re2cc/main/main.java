@@ -1,6 +1,9 @@
-package io.re2cc.model;
+package io.re2cc.main;
 
-public class ShowcaseMonitor {
+import io.re2cc.model.Collectible;
+import io.re2cc.model.Showcase;
+
+public class main {
     static void main() {
         Showcase showcase = new Showcase();
 
