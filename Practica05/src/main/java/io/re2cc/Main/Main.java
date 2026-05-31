@@ -8,7 +8,7 @@ public class Main {
     static void main() {
         Showcase showcase = new Showcase();
 
-        PhysicalCollectible defaultCollectible = new PhysicalCollectible("Random thing", 10.0f, 10.0f, 10.0f, 10.0f);
+        PvcFigureCollectible defaultCollectible = new PvcFigureCollectible("Random PVC");
         PvcFigureCollectible pvcCollectible = new PvcFigureCollectible("PVC thing");
         WoodCollectible wrongMaterialCollectible = new WoodCollectible("Wood thing");
         OilPaintingCollectible specificCollectible = new OilPaintingCollectible("Painting");
@@ -33,6 +33,39 @@ public class Main {
             if (foundCollectible.hasExceedTemperatureThreshold(150f)) {
                 IO.println("Warning: The temperature has exceeded the maximum temperature threshold.");
             }
+        }
+
+        IO.println("");
+
+        // Polymorphic array
+        PhysicalCollectible[] collectibles = new PhysicalCollectible[] {
+                new PvcFigureCollectible("Anime PVC Figure"),
+                new WoodCollectible("Carved Wood Totem"),
+                new OilPaintingCollectible("Sunset Landscape")
+        };
+
+        IO.println("Polymorphic Array");
+        for (PhysicalCollectible item : collectibles) {
+            IO.println("Item: " + item.getName());
+
+            float maintenanceCost = item.calculateMaintenanceCost(100.0f);
+            IO.println("Maintenance Cost: $" + maintenanceCost);
+
+            IO.println("Needs special care: " + item.needsSpecialCare());
+            IO.println("Preservation instructions: " + item.getPreservationInstructions());
+
+            IO.println("Value estimate (base): $" + item.estimateValue(200.0));
+            IO.println("Value estimate (5 years): $" + item.estimateValue(200.0, 5));
+            IO.println("Value estimate (5 years, rare): $" + item.estimateValue(200.0, 5, true));
+
+            if (item instanceof PvcFigureCollectible pvc) {
+                pvc.dustFigure();
+            } else if (item instanceof WoodCollectible wood) {
+                wood.applyVarnish();
+            } else if (item instanceof OilPaintingCollectible painting) {
+                painting.checkCanvasTension();
+            }
+            IO.println("");
         }
     }
 }
