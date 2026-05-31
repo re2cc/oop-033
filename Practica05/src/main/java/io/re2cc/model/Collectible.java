@@ -1,6 +1,6 @@
 package io.re2cc.model;
 
-public class Collectible {
+public abstract class Collectible {
     private String name;
 
     public Collectible(String name) {

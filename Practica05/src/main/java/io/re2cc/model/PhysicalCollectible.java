@@ -1,6 +1,6 @@
 package io.re2cc.model;
 
-public class PhysicalCollectible extends Collectible {
+public abstract class PhysicalCollectible extends Collectible {
     private float uvaThreshold;
     private float uvbThreshold;
     private float temperatureThreshold;
