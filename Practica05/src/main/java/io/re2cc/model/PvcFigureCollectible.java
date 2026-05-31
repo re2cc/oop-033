@@ -48,4 +48,46 @@ public class PvcFigureCollectible extends PhysicalCollectible {
         return String.format("PvcFigureCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), getUvaThreshold(), getUvbThreshold(), getTemperatureThreshold(), getHumidityThreshold());
     }
+
+    @Override
+    public boolean needsSpecialCare() {
+        return true;
+    }
+
+    @Override
+    public String getPreservationInstructions() {
+        return "Keep away from direct sunlight and keep room temperature below 35.0° C to avoid bending.";
+    }
+
+    @Override
+    public float getBaseDepreciationRate() {
+        return 0.05f;
+    }
+
+    @Override
+    public float getRiskMultiplier() {
+        return 1.2f;
+    }
+
+    @Override
+    public double estimateValue(double basePrice) {
+        return basePrice;
+    }
+
+    @Override
+    public double estimateValue(double basePrice, int yearsElapsed) {
+        return basePrice * Math.pow(1.02, yearsElapsed);
+    }
+
+    @Override
+    public double estimateValue(double basePrice, int yearsElapsed, boolean isRare) {
+        if (isRare) {
+            return estimateValue(basePrice, yearsElapsed) * 2.5;
+        }
+        return estimateValue(basePrice, yearsElapsed);
+    }
+
+    public void dustFigure() {
+        IO.println("Dusting the PVC figure: " + getName());
+    }
 }
