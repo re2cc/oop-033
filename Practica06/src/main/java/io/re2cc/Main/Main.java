@@ -21,6 +21,16 @@ public class Main {
 
         showcase.showCollectibles();
 
+        IO.println("");
+        IO.println("Showcase details");
+        showcase.showDisplayDetails();
+
+        IO.println("");
+        IO.println("Showcase valuation");
+        double totalValue = showcase.calculateTotalValue(500.0);
+        IO.println("Total estimated showcase value (base price $500.0): $" + totalValue);
+        IO.println("");
+
         // Polymorphism, will return OilPaintingCollectible on a PhysicalCollectible
         Optional<PhysicalCollectible> search = showcase.searchCollectible("Painting");
 
@@ -54,9 +64,20 @@ public class Main {
             IO.println("Needs special care: " + item.needsSpecialCare());
             IO.println("Preservation instructions: " + item.getPreservationInstructions());
 
-            IO.println("Value estimate (base): $" + item.estimateValue(200.0));
-            IO.println("Value estimate (5 years): $" + item.estimateValue(200.0, 5));
-            IO.println("Value estimate (5 years, rare): $" + item.estimateValue(200.0, 5, true));
+            if (item instanceof Displayable displayable) {
+                IO.println("Display setup: " + displayable.getDisplayType() +
+                        " (Enclosed cabinet required: " + displayable.requiresEnclosedCabinet() + ")");
+            } else {
+                IO.println("Display setup: This item cannot be displayed.");
+            }
+
+            if (item instanceof Valuable valuable) {
+                IO.println("Value estimate (base): $" + valuable.estimateValue(200.0));
+                IO.println("Value estimate (5 years): $" + valuable.estimateValue(200.0, 5));
+                IO.println("Value estimate (5 years, rare): $" + valuable.estimateValue(200.0, 5, true));
+            } else {
+                IO.println("Valuation: This item is not Valuable and has no market value.");
+            }
 
             if (item instanceof PvcFigureCollectible pvc) {
                 pvc.dustFigure();
