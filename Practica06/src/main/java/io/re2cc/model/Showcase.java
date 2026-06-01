@@ -31,4 +31,25 @@ public class Showcase {
             IO.println(physicalCollectible);
         }
     }
+
+    public void showDisplayDetails() {
+        for (PhysicalCollectible item : storedCollectibles) {
+            if (item instanceof Displayable displayable) {
+                IO.println("Collectible '" + item.getName() + "' Display: " + displayable.getDisplayType() +
+                        " (Enclosed Cabinet required: " + displayable.requiresEnclosedCabinet() + ")");
+            } else {
+                IO.println("Collectible '" + item.getName() + "' cannot be displayed.");
+            }
+        }
+    }
+
+    public double calculateTotalValue(double basePrice) {
+        double total = 0.0;
+        for (PhysicalCollectible item : storedCollectibles) {
+            if (item instanceof Valuable valuable) {
+                total += valuable.estimateValue(basePrice);
+            }
+        }
+        return total;
+    }
 }
