@@ -1,10 +1,10 @@
 package io.re2cc.model;
 
 public abstract class PhysicalCollectible extends Collectible implements Preservable {
-    private float uvaThreshold;
-    private float uvbThreshold;
-    private float temperatureThreshold;
-    private float humidityThreshold;
+    protected float uvaThreshold;
+    protected float uvbThreshold;
+    protected float temperatureThreshold;
+    protected float humidityThreshold;
 
     public PhysicalCollectible(String name, float uvaThreshold, float uvbThreshold, float temperatureThreshold,
             float humidityThreshold) {
@@ -88,10 +88,4 @@ public abstract class PhysicalCollectible extends Collectible implements Preserv
     public float calculateMaintenanceCost(float baseValue) {
         return baseValue * getRiskMultiplier() + (baseValue * getBaseDepreciationRate());
     }
-
-    public abstract double estimateValue(double basePrice);
-
-    public abstract double estimateValue(double basePrice, int yearsElapsed);
-
-    public abstract double estimateValue(double basePrice, int yearsElapsed, boolean isRare);
 }
