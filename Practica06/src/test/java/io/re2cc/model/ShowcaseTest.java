@@ -1,7 +1,5 @@
 package io.re2cc.model;
 
-import io.re2cc.model.Collectible;
-import io.re2cc.model.Showcase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
