@@ -1,6 +1,6 @@
 package io.re2cc.model;
 
-public class OilPaintingCollectible extends PhysicalCollectible {
+public class OilPaintingCollectible extends PhysicalCollectible implements Displayable, Valuable {
     public OilPaintingCollectible(String name) {
         super(name, 30.0f, 30.0f, 38.0f, 70.0f);
     }
@@ -12,8 +12,9 @@ public class OilPaintingCollectible extends PhysicalCollectible {
         }
 
         if (uvbThreshold > 50) {
-            throw new IllegalArgumentException("Error: Oil paintings are very sensitive to UVB decoloration. The value" +
-                    " must be lesser than 50");
+            throw new IllegalArgumentException(
+                    "Error: Oil paintings are very sensitive to UVB decoloration. The value" +
+                            " must be lesser than 50");
         }
 
         super.setUvbThreshold(uvbThreshold);
@@ -26,8 +27,9 @@ public class OilPaintingCollectible extends PhysicalCollectible {
         }
 
         if (uvaThreshold > 50) {
-            throw new IllegalArgumentException("Error: Oil paintings are very sensitive to UVA decoloration. The value" +
-                    " must be lesser than 50");
+            throw new IllegalArgumentException(
+                    "Error: Oil paintings are very sensitive to UVA decoloration. The value" +
+                            " must be lesser than 50");
         }
 
         super.setUvaThreshold(uvaThreshold);
@@ -35,7 +37,8 @@ public class OilPaintingCollectible extends PhysicalCollectible {
 
     @Override
     public String toString() {
-        return String.format("OilPaintCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+        return String.format(
+                "OilPaintCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), getUvaThreshold(), getUvbThreshold(), getTemperatureThreshold(), getHumidityThreshold());
     }
 
@@ -79,5 +82,15 @@ public class OilPaintingCollectible extends PhysicalCollectible {
 
     public void checkCanvasTension() {
         IO.println("Checking canvas tension on Oil Painting: " + getName());
+    }
+
+    @Override
+    public String getDisplayType() {
+        return "Wall mount";
+    }
+
+    @Override
+    public boolean requiresEnclosedCabinet() {
+        return false;
     }
 }
