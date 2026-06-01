@@ -1,6 +1,6 @@
 package io.re2cc.model;
 
-public class PvcFigureCollectible extends PhysicalCollectible {
+public class PvcFigureCollectible extends PhysicalCollectible implements Displayable {
     public PvcFigureCollectible(String name) {
         super(name, 25.0f, 25.0f, 27.0f, 70.0f);
     }
@@ -36,8 +36,9 @@ public class PvcFigureCollectible extends PhysicalCollectible {
     @Override
     public void setTemperatureThreshold(float temperatureThreshold) {
         if (temperatureThreshold > 35.0) {
-            throw new IllegalArgumentException("Error: PVC are very susceptible to bending under high temperatures. The" +
-                    " value must be lesser than 35.0° C");
+            throw new IllegalArgumentException(
+                    "Error: PVC are very susceptible to bending under high temperatures. The" +
+                            " value must be lesser than 35.0° C");
         }
 
         super.setTemperatureThreshold(temperatureThreshold);
@@ -45,7 +46,8 @@ public class PvcFigureCollectible extends PhysicalCollectible {
 
     @Override
     public String toString() {
-        return String.format("PvcFigureCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
+        return String.format(
+                "PvcFigureCollectible[Name: %s | UVA: %.2f | UVB: %.2f | Temperature: %.2f° C | Humidity: %.2f%%]",
                 getName(), getUvaThreshold(), getUvbThreshold(), getTemperatureThreshold(), getHumidityThreshold());
     }
 
@@ -70,21 +72,13 @@ public class PvcFigureCollectible extends PhysicalCollectible {
     }
 
     @Override
-    public double estimateValue(double basePrice) {
-        return basePrice;
+    public String getDisplayType() {
+        return "Glass cabinet";
     }
 
     @Override
-    public double estimateValue(double basePrice, int yearsElapsed) {
-        return basePrice * Math.pow(1.02, yearsElapsed);
-    }
-
-    @Override
-    public double estimateValue(double basePrice, int yearsElapsed, boolean isRare) {
-        if (isRare) {
-            return estimateValue(basePrice, yearsElapsed) * 2.5;
-        }
-        return estimateValue(basePrice, yearsElapsed);
+    public boolean requiresEnclosedCabinet() {
+        return true;
     }
 
     public void dustFigure() {
