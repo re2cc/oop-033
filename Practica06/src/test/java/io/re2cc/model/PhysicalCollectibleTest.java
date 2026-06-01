@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PhysicalCollectibleTest {
 
-    private static class TestPhysicalCollectible extends PhysicalCollectible {
+    private static class TestPhysicalCollectible extends PhysicalCollectible implements Valuable {
         public TestPhysicalCollectible(String name, float uva, float uvb, float temp, float hum) {
             super(name, uva, uvb, temp, hum);
         }
