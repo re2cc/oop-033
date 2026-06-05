@@ -36,6 +36,13 @@ public class Showcase {
         this.capacity = capacity;
     }
 
+    public void clear() {
+        storedCollectibles.clear();
+        collectibleByName.clear();
+        uniqueTags.clear();
+        maintenanceHistory.clear();
+    }
+
     public HashSet<String> getUniqueTags() {
         return uniqueTags;
     }

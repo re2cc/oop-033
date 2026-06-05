@@ -3,30 +3,23 @@ package io.re2cc.Main;
 import io.re2cc.model.*;
 import io.re2cc.controller.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.HashSet;
-import java.util.LinkedList;
 
 public class Main {
     static void main() {
-        Showcase showcase = new Showcase(30); // Initialize showcase with capacity 30 to store seed data + user input
+        Showcase showcase = new Showcase(30);
         ShowcaseManager manager = new ShowcaseManager();
+        CollectibleIO fileIO = new CollectibleIO();
 
         testData(showcase, manager);
 
         boolean running = true;
         while (running) {
             IO.println("\n--- MAIN MENU ---");
-            IO.println("1. Add collectible (create)");
-            IO.println("2. Search collectible (read)");
-            IO.println("3. Update thresholds (update)");
-            IO.println("4. Delete collectible (delete)");
-            IO.println("5. List all collectibles (alphabetical natural order)");
-            IO.println("6. List collectibles sorted by custom criteria");
-            IO.println("7. Compound stream search (sensitive items)");
-            IO.println("8. Bulk remove items exceeding humidity limit");
-            IO.println("9. Monitor environment (previous practice)");
-            IO.println("10. View unique categories & activity log");
+            IO.println("1. Add collectible (in-memory)");
+            IO.println("2. List collectibles (in-memory)");
+            IO.println("3. Export files (CSV, JSON, Binary + Auto-backup)");
+            IO.println("4. Import/Restore files (CSV, Binary)");
+            IO.println("5. List saved files in data directory");
             IO.println("0. Exit");
 
             String choiceStr = IO.readln("Choose an option: ");
@@ -43,31 +36,16 @@ public class Main {
                     addNewCollectible(showcase, manager);
                     break;
                 case 2:
-                    searchForCollectible(showcase);
-                    break;
-                case 3:
-                    updateCollectible(showcase);
-                    break;
-                case 4:
-                    deleteCollectible(showcase);
-                    break;
-                case 5:
                     listAll(showcase);
                     break;
-                case 6:
-                    listSorted(showcase);
+                case 3:
+                    exportCollectiblesMenu(showcase, fileIO);
                     break;
-                case 7:
-                    compoundSearch(showcase);
+                case 4:
+                    importCollectiblesMenu(showcase, fileIO, manager);
                     break;
-                case 8:
-                    bulkRemove(showcase);
-                    break;
-                case 9:
-                    monitorEnv(showcase, manager);
-                    break;
-                case 10:
-                    viewLogs(showcase);
+                case 5:
+                    listSavedFiles(fileIO);
                     break;
                 case 0:
                     IO.println("Exiting. Goodbye!");
@@ -147,54 +125,6 @@ public class Main {
         }
     }
 
-    private static void searchForCollectible(Showcase showcase) {
-        String name = IO.readln("Enter name to search: ").trim();
-        showcase.searchCollectible(name).ifPresentOrElse(
-                item -> {
-                    IO.println("Found: " + item);
-                    if (item instanceof Displayable d) {
-                        IO.println("Display details: " + d.getDisplayType() + " (enclosed: "
-                                + d.requiresEnclosedCabinet() + ")");
-                    }
-                    if (item instanceof Valuable v) {
-                        IO.println("Estimated value at base price $100: $" + v.estimateValue(100.0));
-                    }
-                },
-                () -> IO.println("Collectible '" + name + "' not found in showcase."));
-    }
-
-    private static void updateCollectible(Showcase showcase) {
-        String name = IO.readln("Enter name of collectible to update: ").trim();
-        Optional<PhysicalCollectible> opt = showcase.searchCollectible(name);
-        if (opt.isEmpty()) {
-            IO.println("Collectible not found.");
-            return;
-        }
-
-        String tempStr = IO.readln("Enter new Temperature Threshold (°C): ");
-        String humStr = IO.readln("Enter new Humidity Threshold (%): ");
-        try {
-            float temp = Float.parseFloat(tempStr.trim());
-            float hum = Float.parseFloat(humStr.trim());
-            if (showcase.updateCollectibleThresholds(name, temp, hum)) {
-                IO.println("Thresholds updated successfully.");
-            } else {
-                IO.println("Failed to update thresholds.");
-            }
-        } catch (IllegalArgumentException e) {
-            IO.println("Update failed: " + e.getMessage());
-        }
-    }
-
-    private static void deleteCollectible(Showcase showcase) {
-        String name = IO.readln("Enter name of collectible to delete: ").trim();
-        if (showcase.deleteCollectible(name)) {
-            IO.println("Collectible deleted successfully.");
-        } else {
-            IO.println("Collectible not found.");
-        }
-    }
-
     private static void listAll(Showcase showcase) {
         IO.println("\n--- LISTING ALL COLLECTIBLES (Alphabetical natural order via Comparable) ---");
         showcase.getStoredCollectibles().stream()
@@ -202,88 +132,120 @@ public class Main {
                 .forEach(IO::println);
     }
 
-    private static void listSorted(Showcase showcase) {
-        IO.println("\nSelect sorting criteria (using custom Comparators):");
-        IO.println("1. Temperature Threshold (Ascending)");
-        IO.println("2. Humidity Threshold (Ascending)");
-        String sortChoiceStr = IO.readln("Choice (1-2): ");
-        int choice = 0;
+    private static void exportCollectiblesMenu(Showcase showcase, CollectibleIO fileIO) {
+        IO.println("\nSelect export format:");
+        IO.println("1. CSV Format");
+        IO.println("2. JSON Format (Decision Propia)");
+        IO.println("3. Binary Format (Serializable)");
+        String formatStr = IO.readln("Choice (1-3): ");
+        int format = 0;
         try {
-            choice = Integer.parseInt(sortChoiceStr.trim());
+            format = Integer.parseInt(formatStr.trim());
         } catch (NumberFormatException e) {
             IO.println("Invalid choice.");
             return;
         }
 
-        List<PhysicalCollectible> sorted;
-        if (choice == 1) {
-            sorted = showcase.getSortedCollectibles(PhysicalCollectible.BY_TEMPERATURE);
-            IO.println("\n--- Sorted by Temperature Threshold (Ascending) ---");
-        } else if (choice == 2) {
-            sorted = showcase.getSortedCollectibles(PhysicalCollectible.BY_HUMIDITY);
-            IO.println("\n--- Sorted by Humidity Threshold (Ascending) ---");
-        } else {
-            IO.println("Invalid choice.");
+        String filename = IO.readln("Enter filename to save: ").trim();
+        if (filename.isEmpty()) {
+            IO.println("Filename cannot be empty.");
             return;
         }
-        sorted.forEach(IO::println);
-    }
 
-    private static void compoundSearch(Showcase showcase) {
-        IO.println("\n--- Compound Search / Sensitive Filter ---");
-        String maxTempStr = IO.readln("Enter Max Temperature Threshold limit (exclusive): ");
-        String maxHumStr = IO.readln("Enter Max Humidity Threshold limit (exclusive): ");
         try {
-            float maxTemp = Float.parseFloat(maxTempStr.trim());
-            float maxHum = Float.parseFloat(maxHumStr.trim());
-            List<PhysicalCollectible> results = showcase.findSensitiveCollectibles(maxTemp, maxHum);
-            IO.println("\nResults matching Temp < " + maxTemp + "°C AND Hum < " + maxHum + "%:");
-            if (results.isEmpty()) {
-                IO.println("No matching collectibles found.");
-            } else {
-                results.forEach(IO::println);
+            switch (format) {
+                case 1:
+                    if (!filename.toLowerCase().endsWith(".csv"))
+                        filename += ".csv";
+                    fileIO.exportToCsv(showcase.getStoredCollectibles(), filename);
+                    IO.println("Successfully exported to CSV: " + filename);
+                    break;
+                case 2:
+                    if (!filename.toLowerCase().endsWith(".json"))
+                        filename += ".json";
+                    fileIO.exportToJson(showcase.getStoredCollectibles(), filename);
+                    IO.println("Successfully exported to JSON: " + filename);
+                    break;
+                case 3:
+                    if (!filename.toLowerCase().endsWith(".ser"))
+                        filename += ".ser";
+                    fileIO.serializeCollectibles(showcase.getStoredCollectibles(), filename);
+                    IO.println("Successfully exported to Binary: " + filename);
+                    break;
+                default:
+                    IO.println("Invalid format choice.");
             }
-        } catch (NumberFormatException e) {
-            IO.println("Invalid thresholds entered.");
+        } catch (Exception e) {
+            IO.println("Export failed: " + e.getMessage());
         }
     }
 
-    private static void bulkRemove(Showcase showcase) {
-        IO.println("\n--- Bulk Delete (via Iterator.remove) ---");
-        String maxHumStr = IO.readln("Remove all items with humidity threshold exceeding (%): ");
+    private static void importCollectiblesMenu(Showcase showcase, CollectibleIO fileIO, ShowcaseManager manager) {
+        IO.println("\nSelect import format:");
+        IO.println("1. CSV Format");
+        IO.println("2. Binary Format (Serializable)");
+        String formatStr = IO.readln("Choice (1-2): ");
+        int format = 0;
         try {
-            float maxHum = Float.parseFloat(maxHumStr.trim());
-            showcase.removeCollectiblesExceedingHumidity(maxHum);
-            IO.println("Bulk removal process finished.");
+            format = Integer.parseInt(formatStr.trim());
         } catch (NumberFormatException e) {
-            IO.println("Invalid humidity threshold.");
+            IO.println("Invalid choice.");
+            return;
+        }
+
+        String filename = IO.readln("Enter filename to load: ").trim();
+        if (filename.isEmpty()) {
+            IO.println("Filename cannot be empty.");
+            return;
+        }
+
+        String clearStr = IO.readln("Clear current showcase before loading? (y/n): ").trim();
+        boolean clearFirst = clearStr.equalsIgnoreCase("y") || clearStr.equalsIgnoreCase("yes");
+
+        try {
+            List<PhysicalCollectible> imported = null;
+            if (format == 1) {
+                if (!filename.toLowerCase().endsWith(".csv"))
+                    filename += ".csv";
+                imported = fileIO.importFromCsv(filename);
+            } else if (format == 2) {
+                if (!filename.toLowerCase().endsWith(".ser"))
+                    filename += ".ser";
+                imported = fileIO.deserializeCollectibles(filename);
+            } else {
+                IO.println("Invalid format choice.");
+                return;
+            }
+
+            if (imported != null) {
+                if (clearFirst) {
+                    showcase.clear();
+                }
+                int addedCount = 0;
+                for (PhysicalCollectible item : imported) {
+                    try {
+                        manager.addCollectible(showcase, item);
+                        addedCount++;
+                    } catch (Exception e) {
+                        IO.println("Failed to add '" + item.getName() + "': " + e.getMessage());
+                    }
+                }
+                IO.println("Successfully imported " + addedCount + " collectibles.");
+            }
+        } catch (Exception e) {
+            IO.println("Import failed: " + e.getMessage());
         }
     }
 
-    private static void monitorEnv(Showcase showcase, ShowcaseManager manager) {
-        IO.println("\n--- Environmental Sensor Check ---");
-        String sensorId = IO.readln("Enter Environmental Sensor ID (or press Enter for 'Sensor01'): ").trim();
-        if (sensorId.isEmpty()) {
-            sensorId = "Sensor01";
-        }
-        manager.monitorEnvironment(showcase, sensorId);
-    }
-
-    private static void viewLogs(Showcase showcase) {
-        IO.println("\n--- Unique Categories currently in Showcase (HashSet) ---");
-        HashSet<String> tags = showcase.getUniqueTags();
-        if (tags.isEmpty()) {
-            IO.println("No categories recorded.");
+    private static void listSavedFiles(CollectibleIO fileIO) {
+        IO.println("\n--- SAVED FILES IN DATA DIRECTORY ---");
+        List<String> files = fileIO.listFiles();
+        if (files.isEmpty()) {
+            IO.println("No files found.");
         } else {
-            IO.println(String.join(", ", tags));
-        }
-
-        IO.println("\n--- Activity/Maintenance Log (LinkedList history) ---");
-        LinkedList<String> logs = showcase.getMaintenanceHistory();
-        if (logs.isEmpty()) {
-            IO.println("No activities logged.");
-        } else {
-            logs.forEach(log -> IO.println("- " + log));
+            for (String file : files) {
+                IO.println("- " + file);
+            }
         }
     }
 }
