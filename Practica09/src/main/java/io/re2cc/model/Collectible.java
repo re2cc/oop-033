@@ -1,6 +1,9 @@
 package io.re2cc.model;
 
-public abstract class Collectible implements Comparable<Collectible> {
+import java.io.Serializable;
+
+public abstract class Collectible implements Comparable<Collectible>, Serializable {
+    private static final long serialVersionUID = 1L;
     private String name;
 
     public Collectible(String name) {
