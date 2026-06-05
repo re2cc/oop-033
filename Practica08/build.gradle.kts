@@ -26,6 +26,10 @@ application {
     mainClass.set("io.re2cc.Main.Main")
 }
 
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
 tasks.test {
     useJUnitPlatform()
 }
