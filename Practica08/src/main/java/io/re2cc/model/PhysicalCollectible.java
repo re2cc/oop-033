@@ -1,6 +1,14 @@
 package io.re2cc.model;
 
+import java.util.Comparator;
+
 public abstract class PhysicalCollectible extends Collectible implements Preservable {
+    public static final Comparator<PhysicalCollectible> BY_TEMPERATURE =
+            Comparator.comparingDouble(PhysicalCollectible::getTemperatureThreshold);
+
+    public static final Comparator<PhysicalCollectible> BY_HUMIDITY =
+            Comparator.comparingDouble(PhysicalCollectible::getHumidityThreshold);
+
     protected float uvaThreshold;
     protected float uvbThreshold;
     protected float temperatureThreshold;
