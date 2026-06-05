@@ -9,3 +9,7 @@ Aparentemente en Java existe una estrutura que automaticamente cierra los recuso
 - Show me an exaple of logging to a file in Java
 
 Basciamente hizo eso, un logger que crea un archivo y escribe.
+
+- Why does the console printing looks out of order? (Weird ouput of the program)
+
+Basicamente es porque logger trata de escribir al mismo tiempo que IO.println, y como no se sincronizan, se mezclan... La solucion que propone es usar `logger.setUseParentHandlers(false);`
