@@ -1,6 +1,8 @@
 package io.re2cc.model;
 
 public class WoodCollectible extends PhysicalCollectible implements Valuable {
+    private static final long serialVersionUID = 1L;
+
     public WoodCollectible(String name) {
         super(name, 10.0f, 30.0f, 37.0f, 10.0f);
     }

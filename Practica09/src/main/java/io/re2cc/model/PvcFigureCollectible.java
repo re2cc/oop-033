@@ -1,6 +1,8 @@
 package io.re2cc.model;
 
 public class PvcFigureCollectible extends PhysicalCollectible implements Displayable {
+    private static final long serialVersionUID = 1L;
+
     public PvcFigureCollectible(String name) {
         super(name, 25.0f, 25.0f, 27.0f, 70.0f);
     }

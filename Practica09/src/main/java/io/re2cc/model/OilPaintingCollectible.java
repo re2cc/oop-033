@@ -1,6 +1,8 @@
 package io.re2cc.model;
 
 public class OilPaintingCollectible extends PhysicalCollectible implements Displayable, Valuable {
+    private static final long serialVersionUID = 1L;
+
     public OilPaintingCollectible(String name) {
         super(name, 30.0f, 30.0f, 38.0f, 70.0f);
     }

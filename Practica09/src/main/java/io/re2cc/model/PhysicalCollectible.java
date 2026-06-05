@@ -3,6 +3,8 @@ package io.re2cc.model;
 import java.util.Comparator;
 
 public abstract class PhysicalCollectible extends Collectible implements Preservable {
+    private static final long serialVersionUID = 1L;
+
     public static final Comparator<PhysicalCollectible> BY_TEMPERATURE =
             Comparator.comparingDouble(PhysicalCollectible::getTemperatureThreshold);
 
