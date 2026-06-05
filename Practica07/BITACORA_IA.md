@@ -5,3 +5,7 @@ En pocas palabras sujiere que lo dejes fuera de los paquetes de MVC, aparentemen
 - What is the try-with-resources thing?
 
 Aparentemente en Java existe una estrutura que automaticamente cierra los recusos si ocurre un error en el bloque.
+
+- Show me an exaple of logging to a file in Java
+
+Basciamente hizo eso, un logger que crea un archivo y escribe.

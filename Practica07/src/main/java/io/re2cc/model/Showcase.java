@@ -7,6 +7,14 @@ public class Showcase {
     private ArrayList<PhysicalCollectible> storedCollectibles = new ArrayList<>();
     protected int capacity = 5; // Default capacity, other showcase types may have a different ones
 
+    public ArrayList<PhysicalCollectible> getStoredCollectibles() {
+        return storedCollectibles;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
     public Showcase() {}
 
     public void addCollectible(PhysicalCollectible physicalCollectible) {
