@@ -70,7 +70,7 @@
             <ChoiceBox fx:id="choiceMembership" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="2.0" top="7.0" />
-               </HBox.margin>
+                </HBox.margin>
             </ChoiceBox>
          </children>
          <opaqueInsets>
@@ -99,7 +99,7 @@
             <Insets top="5.0" />
          </opaqueInsets>
          <children>
-            <Button fx:id="btnPay" mnemonicParsing="false" onAction="#handlePay" text="Pay">
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="196.0" text="Save (Pay if membership change)">
                <HBox.margin>
                   <Insets bottom="2.0" right="2.0" />
                </HBox.margin>
