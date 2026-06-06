@@ -28,6 +28,15 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs("src/main/java")
+            include("**/*.fxml")
+        }
+    }
+}
+
 application {
     mainClass.set("io.re2cc.Main.Main")
 }
