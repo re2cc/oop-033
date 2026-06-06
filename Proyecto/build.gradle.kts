@@ -1,6 +1,7 @@
 plugins {
     id("java")
     application
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "io.re2cc"
@@ -10,6 +11,11 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(25))
     }
+}
+
+javafx {
+    version = "25"
+    modules("javafx.controls", "javafx.fxml")
 }
 
 repositories {
