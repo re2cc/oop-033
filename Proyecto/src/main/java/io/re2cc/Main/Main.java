@@ -1,7 +1,9 @@
 package io.re2cc.Main;
 
+import javafx.application.Application;
+
 public class Main {
-    static void main() {
-        IO.println("Test");
+    public static void main(String[] args) {
+        Application.launch(GymApp.class, args);
     }
 }
