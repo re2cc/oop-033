@@ -190,7 +190,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab text="Clases">
+            <Tab text="Classes">
                <content>
                   <VBox>
                      <children>
