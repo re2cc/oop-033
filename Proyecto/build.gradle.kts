@@ -48,3 +48,16 @@ tasks.named<JavaExec>("run") {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<Jar>("fatJar") {
+    archiveClassifier.set("all")
+    manifest {
+        attributes["Main-Class"] = "io.re2cc.Main.Main"
+    }
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
