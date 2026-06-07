@@ -63,7 +63,7 @@ public class ReportGenerator implements Runnable {
             }
             sb.append("\n");
 
-            sb.append("ACCESS LOGS HISTORY");
+            sb.append("ACCESS LOGS HISTORY\n");
             List<AccessLog> logs = gymSystem.getAccessLogs();
             sb.append("Total Access Logs: ").append(logs.size()).append("\n");
             for (AccessLog log : logs) {
