@@ -32,6 +32,7 @@ public class GymController {
     @FXML private TableColumn<Client, String> colClientExpiration;
     @FXML private TableColumn<Client, Boolean> colClientAutoRenew;
     @FXML private TableColumn<Client, String> colClientAccessStatus;
+    @FXML private TableColumn<Client, Integer> colClientPoints;
 
     @FXML private TableView<MembershipType> tblMemberships;
     @FXML private TableColumn<MembershipType, String> colMembershipType;
@@ -104,6 +105,7 @@ public class GymController {
         colClientAutoRenew.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().isAutoRenew()));
         colClientAccessStatus.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().isInside() ? "Inside" : "Outside"));
+        colClientPoints.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getPoints()).asObject());
 
         // Memberships table
         colMembershipType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));

@@ -91,7 +91,7 @@ public class GymSystem implements Serializable {
                     "Access denied: " + client.getName() + "'s membership expired on " + client.getExpirationDate());
         }
         client.setInside(true);
-        client.addPoints(10);
+        client.addPoints(1);
         accessLogs.add(new AccessLog(client, systemDate, "ENTRY"));
     }
 

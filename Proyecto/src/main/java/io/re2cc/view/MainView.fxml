@@ -80,12 +80,13 @@
                      <children>
                         <TableView fx:id="tblClients" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="colClientId" prefWidth="59.0" text="ID" />
-                            <TableColumn fx:id="colClientName" prefWidth="209.0" text="NAME" />
-                              <TableColumn fx:id="colClientMembership" prefWidth="89.0" text="MEMBERSHIP" />
-                              <TableColumn fx:id="colClientExpiration" prefWidth="88.0" text="EXPIRATION" />
-                              <TableColumn fx:id="colClientAutoRenew" prefWidth="86.0" text="AUTO-RENEW" />
-                              <TableColumn fx:id="colClientAccessStatus" prefWidth="108.0" text="ACCESS STATUS" />
+                            <TableColumn fx:id="colClientId" prefWidth="52.0" text="ID" />
+                            <TableColumn fx:id="colClientName" prefWidth="151.0" text="NAME" />
+                              <TableColumn fx:id="colClientMembership" prefWidth="86.0" text="MEMBERSHIP" />
+                              <TableColumn fx:id="colClientExpiration" prefWidth="79.0" text="EXPIRATION" />
+                              <TableColumn fx:id="colClientAutoRenew" prefWidth="98.0" text="AUTO-RENEW" />
+                              <TableColumn fx:id="colClientAccessStatus" prefWidth="100.0" text="ACCESS STATUS" />
+                              <TableColumn fx:id="colClientPoints" prefWidth="73.0" text="POINTS" />
                           </columns>
                         </TableView>
                         <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="0.0">
