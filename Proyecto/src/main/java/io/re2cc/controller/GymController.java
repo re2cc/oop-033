@@ -78,7 +78,7 @@ public class GymController {
                 System.out.println("Loaded database from: " + DB_FILE);
                 return;
             } catch (Exception e) {
-                System.err.println("Could not load db.ser: " + e.getMessage() + ". Regranulating seed data.");
+                System.err.println("Could not load db.ser: " + e.getMessage() + ". Regenerating seed data.");
             }
         }
         gymSystem = new GymSystem();
